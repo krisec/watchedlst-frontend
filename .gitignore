@@ -83,3 +83,5 @@ dist/
 
 #ReactApp (Due to not being implemented yet)
 watchedlst/
+
+package-lock.json

@@ -32,6 +32,7 @@ import * as HTTP from 'http';
 import * as fs from 'fs';
 
 var movieRouter = require('./routes/movies').default;
+var searchRouter = require('./routes/search').default;
 
 const express = require('express');
 const port = "3000"
@@ -41,10 +42,11 @@ const port = "3000"
 //But that will not be important for a while...
 
 const app = express();
-
+console.log(searchRouter);
 // OK, so now we know. ES6 node.js using babel gets a bit fucky...
 // But I think the fucky parts are fine due to the benefits of the cleaner syntax in ES6.
 app.use('/movie/', movieRouter.movierouter);
+app.use('/search/', searchRouter);
 
 // Sends the user to home
 app.get('/', (req, res) => {
@@ -52,15 +54,11 @@ app.get('/', (req, res) => {
 	res.send(html);
 });
 
-
+// Do I even have to send any requests to the api server?... Yes, but maybe not through the node server.
+// We could possibly that clientside, seeing as the api-server will respond using JSON.
+// In theory, we could do most of the routing client side, but this might be more secure.
 
 app.listen(port, () => console.log(`The app is listening on port ${port}!`));
-
-async function handleRequest(){
-	let html = await fs.readFile('dist/movie.html', 'utf-8');
-}
-
-
 //Notice for future self, remember to have an initial decleration with let or var
 //The compiler gets pissy if not :)
 // const server = HTTP.createServer((req, res) => {
